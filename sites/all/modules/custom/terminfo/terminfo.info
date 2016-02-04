@@ -3,7 +3,6 @@ description = Taxonomy Term Info
 core = 7.x
 package = Zen Other
 
-files[] = class/basic_term_form.class.inc
 files[] = class/basic_term_info.class.inc
 files[] = class/basic_term_query.class.inc
 

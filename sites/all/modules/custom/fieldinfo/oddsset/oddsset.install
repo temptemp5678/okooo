@@ -1,0 +1,83 @@
+<?php
+/**
+* @file
+*  This file contains the schema for the video fields module.
+*/
+
+/**
+ * Implements hook_field_schema().
+ */
+function oddsset_field_schema($field) {
+  return array(
+    'columns' => array(
+      'oddsset_id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => t('The primary identifier for a quotation.'),
+      ),
+      'oddsset_company_name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+        'description' => t('Company Name'),
+      ),
+      'oddsset_initial_home' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+        'description' => t('Initial Home'),
+      ),
+      'oddsset_initial_draw' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+        'description' => t('Initial Draw'),
+      ),
+      'oddsset_initial_away' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+        'description' => t('Initial Away'),
+      ),
+      'oddsset_final_home' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+        'description' => t('Final Home'),
+      ),
+      'oddsset_final_draw' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+        'description' => t('Final Draw'),
+      ),
+      'oddsset_final_away' => array(
+        'type' => 'numeric',
+        'length' => 255,
+        'not null' => FALSE,
+        'precision' => 6,
+        'scale' => 2,
+        'default' => NULL,
+        'description' => t('Final Away'),
+      ),
+    ),
+    'indexes' => array(
+      'oddsset_id' => array('oddsset_id'),
+      'oddsset_company_name' => array('oddsset_company_name'),
+      'oddsset_initial_home' => array('oddsset_initial_home'),
+      'oddsset_initial_draw' => array('oddsset_initial_draw'),
+      'oddsset_initial_away' => array('oddsset_initial_away'),
+      'oddsset_final_home' => array('oddsset_final_home'),
+      'oddsset_final_draw' => array('oddsset_final_draw'),
+      'oddsset_final_away' => array('oddsset_final_away'),
+    ),
+    'primary key' => array('oddsset_id'),
+  );
+}

@@ -8,41 +8,6 @@
  * Implementation of hook_init()
  */
 function terminfo_init() {
-  $TermEvaluationFormInfo = new TermEvaluationFormInfo(61);
-  $TermEvaluationFormInfo->questionSetList();
-    // $cc = $this->questionSetList();
-    // dpm($cc);
+
 }
 
-/**
- * Implements hook_menu()
- */
-function terminfo_menu() {
-  $items = array();
-
-  $items['debug/term/sortable'] = array(
-    'title' => 'Debug Page',
-    'page callback' => '_terminfo_debug_term_sortable',
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-    'file' => 'debug/terminfo_debug_term_page.page.inc',
-  );
-
-  $items['debug/chart/page'] = array(
-    'title' => 'Debug Page',
-    'page callback' => '_terminfo_debug_chart_page',
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-    'file' => 'debug/terminfo_debug_chart_page.page.inc',
-  );
-
-  $items['debug/chart/pdf'] = array(
-    'title' => 'Debug Page',
-    'page callback' => '_terminfo_debug_chart_pdf',
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-    'file' => 'debug/terminfo_debug_chart_page.page.inc',
-  );
-
-  return $items;
-}
