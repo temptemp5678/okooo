@@ -1,0 +1,50 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_init()
+ */
+function settinginfo_init() {
+
+}
+
+/**
+ * Implements hook_library().
+ *
+   drupal_add_library('settinginfo', 'settinginfo_angularjs');
+ *
+ */
+function settinginfo_library() {
+  $libraries = array();
+
+  /** - - - - - - return - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_menu()
+ */
+function settinginfo_menu() {
+  $items = array();
+
+  $items['manage/basic-page/403page'] = array(
+    'title' => '403 Page',
+    'page callback' => '_settinginfo_manage_basic_page_403',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/settinginfo_manage_basic_page.page.inc',
+  );
+  $items['manage/basic-page/404page'] = array(
+    'title' => '404 Page',
+    'page callback' => '_settinginfo_manage_basic_page_404',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/othersetting_manage_basic_page.page.inc',
+  );
+  return $items;
+}
+

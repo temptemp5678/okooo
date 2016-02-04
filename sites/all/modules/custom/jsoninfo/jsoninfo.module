@@ -1,0 +1,192 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_init()
+ */
+function jsoninfo_init() {
+  $SourceJson = new SourceJson();
+  $JsonData = new JsonData();
+
+  OtherCommonJson::saveDataToJson($SourceJson->allProgramData(), 'source/all_program_data.json');
+  OtherCommonJson::saveDataToJson($JsonData->programData(), 'source/program_data.json');
+}
+/**
+ * Implements hook_menu()
+ */
+function jsoninfo_menu() {
+  $items = array();
+
+  /**
+   * manage
+   */
+  /** - - - - - - node - - - - - - - - - - - - - - - - - - - - - - - -  */
+  $items['manage/json/node/event/list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_node_event_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_node.page.inc',
+  );
+  $items['manage/json/node/meeting/create'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_node_meeting_create',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_node.page.inc',
+  );
+  $items['manage/json/node/meeting/list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_node_meeting_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_node.page.inc',
+  );
+  $items['manage/json/node/meeting/map'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_node_meeting_map',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_node.page.inc',
+  );
+
+  /** - - - - - - page - - - - - - - - - - - - - - - - - - - - - - - -  */
+  $items['manage/json/page/landing'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_page_landing',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_page.page.inc',
+  );
+
+  /** - - - - - - program - - - - - - - - - - - - - - - - - - - - - - - -  */
+  $items['manage/json/program/table'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_program_table',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_program.page.inc',
+  );
+
+  $items['manage/json/program/area'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_program_area',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_program.page.inc',
+  );
+  $items['manage/json/program/area-accredited'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_program_area_accredited',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_program.page.inc',
+  );
+  $items['manage/json/program/area-ola'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_program_area_ola',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_program.page.inc',
+  );
+
+  $items['manage/json/program/unit'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_program_unit',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_program.page.inc',
+  );
+
+  $items['manage/json/program/unit-program'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_program_unit_program',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_program.page.inc',
+  );
+
+  /** - - - - - - term - - - - - - - - - - - - - - - - - - - - - - - -  */
+  $items['manage/json/term/all-program-data'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_all_program_data',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+
+  $items['manage/json/term/evaluation-form-list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_evaluation_form_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+  $items['manage/json/term/evaluation-form-question-list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_evaluation_form_question_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+
+  $items['manage/json/term/program/list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_program_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+
+  $items['manage/json/term/question-field/create'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_question_field_create',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+
+  $items['manage/json/term/question-field-data'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_question_field_data',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+
+  $items['manage/json/term/question-library'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_question_library',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+  $items['manage/json/term/question-library/list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_term_question_library_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_term.page.inc',
+  );
+
+  /** - - - - - - user - - - - - - - - - - - - - - - - - - - - - - - -  */
+  $items['manage/json/user/list'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_user_list',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_user.page.inc',
+  );
+  $items['manage/json/user/profile'] = array(
+    'title' => 'Create JSON',
+    'page callback' => '_jsoninfo_user_profile',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_user.page.inc',
+  );
+
+  return $items;
+}
