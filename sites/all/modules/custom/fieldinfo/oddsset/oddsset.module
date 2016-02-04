@@ -1,0 +1,269 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/*
+ * Implementation of hook_init()
+ * field_answerset_question
+ */
+function answerset_init() {
+}
+
+/**
+ * Implements hook_field_info().
+ * Line Items field_question_line_items
+ */
+function answerset_field_info() {
+  return array(
+    'answersetfield' => array(                 // field type
+      'label' => t('Answer Set'),
+      'description' => t("This field stores Question Answer Set and their properties."),
+      'settings' => array('allowed_values' => array(), 'allowed_values_function' => ''),
+      'default_widget' => 'answersetfield_default_widget',
+      'default_formatter' => 'answersetfield_default_formatter',
+      'property_type' => 'answersetfield_type',
+      'property_callbacks' => array('answersetfield_property_info_callback'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ * Define the Drupal widget information
+ */
+function answerset_field_widget_info() {
+  return array(
+    'answersetfield_default_widget' => array(
+      'label' => t('Question Answer Set Widget'),
+      'field types' => array('answersetfield'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function answerset_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    /**
+     * Compound field and their preview.
+     */
+    case 'answersetfield_default_widget':
+      /**
+       * Empty Integer fields throwing invalid data value in Form API
+       * if the data array contained a BOOL but the DB schema declaration expected an INT ... fatal error
+       */
+
+      // The fields to be rendered.
+      // Evaluation Question Answer
+      $fields = array(
+        'answerset_queslibr_tid' => t('Question Lib Tid'),
+        'answerset_quesfield_tid' => t('Question Field Tid'),
+        'answerset_answer' => t('Question Answer'),
+      );
+
+      // Loop through each field and create the appropriate widget.
+      foreach ($fields as $key => $label) {
+        switch($key) {
+          case 'answerset_queslibr_tid':
+            $element[$key] = array(
+              '#type' => 'textfield',
+              '#title' => $label,
+              '#default_value' => isset($items[$delta][$key]) ? $items[$delta][$key] : '',
+            );
+            break;
+
+          case 'answerset_quesfield_tid':
+            $element[$key] = array(
+              '#type' => 'textfield',
+              '#title' => $label,
+              '#default_value' => isset($items[$delta][$key]) ? $items[$delta][$key] : '',
+            );
+            break;
+
+          case 'answerset_answer':
+            $element[$key] = array(
+              '#type' => 'textfield',
+              '#title' => $label,
+              '#default_value' => isset($items[$delta][$key]) ? $items[$delta][$key] : '',
+            );
+            break;
+
+          default:
+            break;
+        }
+      }
+    break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function answerset_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  foreach ($items as $delta => $item) {
+    if (isset($item['answerset_queslibr_tid'])) {
+      // map the field values to the correct place in the data array
+      $items[$delta]['answerset_queslibr_tid'] = $item['answerset_queslibr_tid'];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_insert().
+ */
+
+/**
+ * Implements hook_field_attach_insert().
+ *
+ * Emulates a post-insert hook.
+ */
+
+/**
+ * Implements hook_field_update().
+ */
+
+/**
+ * Implements hook_field_attach_update().
+ *
+ * Emulates a post-update hook.
+ */
+
+/**
+ * Implements hook_field_delete().
+ */
+
+/**
+ * Implements hook_field_attach_delete().
+ *
+ * Emulates a post-delete hook.
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function answerset_field_formatter_info() {
+  return array(
+    'answersetfield_default_formatter' => array(
+      'label' => t('Question Set Line Item Formatter'),
+      'description' => t('Question Set Line Item Formatter Description'),
+      'field types' => array('answersetfield'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ * node output display
+ */
+function answerset_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $node = menu_get_object();
+
+  if (!empty($node)) {
+    switch ($display['type']) {
+      case 'answersetfield_default_formatter':
+
+        // Theme items.
+        foreach ($items as $key => $item) {
+          $element[$key]['#markup'] = '';
+          $element[$key]['#markup'] .= t('Answer is') . ' ' . $item['answerset_answer'];
+          $element[$key]['#markup'] .= ', ';
+
+          $theme_array = array(
+            'answerset_queslibr_tid' => $item['answerset_queslibr_tid'],
+            'answerset_quesfield_tid' => $item['answerset_quesfield_tid'],
+            'answerset_answer' => $item['answerset_answer'],
+          );
+
+          // $element[$key] = array('#markup' => theme('answersetfield', $theme_array));
+        }
+        break;
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function answerset_field_is_empty($item, $field) {
+  if ($field['type'] == 'answersetfield') {
+    if (empty($item['answerset_queslibr_tid'])) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function answerset_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  if ($field['type'] == 'answersetfield') {
+    foreach ($items as $delta => $item) {
+      // Check if the field is empty,
+      if (empty($item['answerset_answer']) && empty($item['answerset_queslibr_tid']) && empty($item['answerset_quesfield_tid'])) {
+        // Do nothing if all field is empty on current line
+      }
+      else {
+        if (empty($item['answerset_queslibr_tid'])) {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'answerset_items_empty_field_invalid',
+            'message' => t('Question Answer must be not empty'),
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_error().
+ */
+function answerset_field_widget_error($element, $error, $form, &$form_state) {
+  switch ($error['error']) {
+    case 'answerset_items_empty_field_invalid':
+      form_error($element, $error['message']);
+      break;
+  }
+}
+
+/**
+ * Custom callback function for metadata.
+ *
+ * @param $info
+ * @param $entity_type
+ * @param $field
+ * @param $instance
+ * @param $field_type
+*/
+function answersetfield_property_info_callback(&$info, $entity_type, $field, $instance, $field_type) {
+  $property = &$info[$entity_type]['bundles'][$instance['bundle']]['properties'][$field['field_name']];
+
+  $property['getter callback'] = 'entity_metadata_field_verbatim_get';
+  $property['setter callback'] = 'entity_metadata_field_verbatim_set';
+
+  unset($property['query callback']);
+
+  $property['property info']['answerset_answer'] = array(
+    'type' => 'text',
+    'label' => t('Reference Line Item Id'),
+    'setter callback' => '  ',
+  );
+  $property['property info']['answerset_queslibr_tid'] = array(
+    'type' => 'text',
+    'label' => t('New Item Price'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $property['property info']['answerset_quesfield_tid'] = array(
+    'type' => 'text',
+    'label' => t('New Item Weight'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+}
